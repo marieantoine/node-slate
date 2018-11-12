@@ -1,120 +1,95 @@
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to official documentation for the TireCoop API!
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+If you are a registered TireCoop Vendor, the TireCoop API provides access to endpoints that allow you to search for Dealers that are part of your program and to place orders to against the Dealers.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
+```csharp
 require 'kittn'
 
 api = Kittn::APIClient.authorize!('meowmeowmeow')
 ```
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```bash
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+TireCoop uses API keys to provide authenticated access to the API. Once registered as a Vendor, you can contact us for a key at [support@esprofessionals.com](mailto:support@esprofessionals.com).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+TireCoop requires developers to send the authorization containing their API keys for all endpoints in the header.
 
-`Authorization: meowmeowmeow`
+<!-- `Authorization: meowmeowmeow`
 
 <aside class="notice">
 You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+</aside> -->
 
-# Kittens
+# Search API
 
-## Get All Kittens
-
-```ruby
+## Get Closest Dealers
+<!-- 
+```csharp
 require 'kittn'
 
 api = Kittn::APIClient.authorize!('meowmeowmeow')
 api.kittens.get
-```
+``` -->
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```bash
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+> A request returns JSON structured like this:
 
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+      "id": "4c164234-69ec-44c3-8354-111eec13337d",
+      "name": "Wheel Demo",
+      "email": "wheeldemo@tirewire.com",
+      "phone": "0000000000",
+      "address": "1211a Lexington Ave, New York, NY 10028, USA",
+      "latitude": 40.7769914,
+      "longitude": -73.957262599999979,
+      "services": null,
+      "theming": null,
+      "warehouses": null
   },
   {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+      "id": "4c6dcdd5-f628-4c77-9eca-c71db1e538cd",
+      "name": "Mike's New Tire Shop",
+      "email": "161083.toolbox@tirewire.com",
+      "phone": "205615322",
+      "address": "5th Ave, New York, NY, USA",
+      "latitude": 40.774414599999993,
+      "longitude": -73.9656177,
+      "services": null,
+      "theming": null,
+      "warehouses": null
   }
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves closest dealers within a radius.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET http://api.tiremove.com/api/search`
 
 ### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+Parameter | Default | Required | Description
+--------- | ------- | -------- | -----------
+size | 5 | No | If not set to anything, the result will return the five closest dealers.
+radius | 10 | Yes | If not set to anything, the result will include results within the first 50 km from the location specified.
+lat | - | Yes | This is the latitude coordinate of the customer's location.
+lng | - | Yes | This is the longitude coordinate of the customer's location.
 
-<aside class="success">
+<!-- <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
-</aside>
+</aside> -->
 
-## Get a Specific Kitten
+<!-- ## Get a Specific Kitten
 
 ```ruby
 require 'kittn'
@@ -156,7 +131,7 @@ let max = api.kittens.get(2);
 
 This endpoint retrieves a specific kitten.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside> 
 
 ### HTTP Request
 
@@ -166,4 +141,50 @@ This endpoint retrieves a specific kitten.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+ID | The ID of the kitten to retrieve -->
+
+
+# Orders API
+
+## Create Order
+
+> The POST request JSON would be structured like this:
+
+```json
+{
+  "vendorId": "abcdefg1234567dbca054c3c07078cd",
+  "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+  "warehouseId": 17,
+  "customer": {
+    "email": "carolinetest@example.com",
+    "name": "Caroline",
+    "phone": "555-5555-5555"
+  },
+  "paymentReference": "CUST-384903",
+  "items": [
+    {
+      "tireId": 11,
+      "quantity": 2,
+      "price": 49,
+      "tax": 11.33
+    }
+  ]
+}
+
+```
+This endpoint creates a TireCoop Order that is then sent to the Vendor and Dealer tools.
+
+### HTTP Request
+
+`POST http://api.tiremove.com/api/search`
+
+### Query Parameters
+
+Parameter | Default | Required | Description
+--------- | ------- | -------- | -----------
+vendorId | 5 | No | -
+dealerId | 10 | Yes | -
+warehouseId | - | Yes | -
+customer | - | Yes | -
+paymentReference | | |
+items | | |
