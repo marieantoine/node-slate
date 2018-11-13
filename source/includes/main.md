@@ -7,7 +7,7 @@ If you are a registered TireCoop Vendor, the TireCoop API provides access to end
 
 # Authentication
 
-> To authorize, use this code:
+<!-- > To authorize, use this code:
 
 ```csharp
 require 'kittn'
@@ -16,7 +16,7 @@ api = Kittn::APIClient.authorize!('meowmeowmeow')
 ```
 
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `meowmeowmeow` with your API key. -->
 
 TireCoop uses API keys to provide authenticated access to the API. Once registered as a Vendor, you can contact us for a key at [support@esprofessionals.com](mailto:support@esprofessionals.com).
 
@@ -31,13 +31,21 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 # Search API
 
 ## Get Closest Dealers
-<!-- 
-```csharp
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-``` -->
+```csharp
+
+ HttpClient client = new HttpClient
+    {
+        BaseAddress = new Uri("http://api.tiremove.com/")
+    }
+
+    client.DefaultRequestHeaders.Add("bearer", "YourApiKeyHere");
+
+    // Hitting the endpoint.
+    object response = Newtonsoft.Json.JsonConvert.DeserializeObject
+        (await client.GetStringAsync("api/search?size=10&radius=15&lat=40.77&lng=-73.95"));
+
+```
 
 > A request returns JSON structured like this:
 
@@ -81,74 +89,54 @@ This endpoint retrieves closest dealers within a radius.
 Parameter | Default | Required | Description
 --------- | ------- | -------- | -----------
 size | 5 | No | If not set to anything, the result will return the five closest dealers.
-radius | 10 | Yes | If not set to anything, the result will include results within the first 50 km from the location specified.
+radius | - | Yes | All dealer results will be within this specified radius.
 lat | - | Yes | This is the latitude coordinate of the customer's location.
 lng | - | Yes | This is the longitude coordinate of the customer's location.
 
-<!-- <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside> -->
+## Get Dealer Services
 
-<!-- ## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```bash
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside> 
+This endpoint retrieves the services of a specific dealer.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET http://api.tiremove.com/api/search/{dealerid}/services`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve -->
+Parameter | Required | Description
+--------- | -------- | ----------- 
+dealerid | Yes | The results will return the services for this particular dealer.
 
+```csharp
+
+ HttpClient client = new HttpClient
+    {
+        BaseAddress = new Uri("http://api.tiremove.com/")
+    }
+
+    client.DefaultRequestHeaders.Add("bearer", "YourApiKeyHere");
+
+    // Hitting the endpoint.
+    object response = Newtonsoft.Json.JsonConvert.DeserializeObject
+        (await client.GetStringAsync("api/search/{dealerid}/services"));
+
+```
+
+>The following sample represents the JSON response for this endpoint:
+
+```json
+{
+  "name": "Best Tire",
+  "price": 60.00,
+  "description": "Tire Fitting"
+}
+```
 
 # Orders API
 
 ## Create Order
 
-> The POST request JSON would be structured like this:
+> The following sample represents the JSON response for this endpoint:
 
 ```json
 {
@@ -176,15 +164,15 @@ This endpoint creates a TireCoop Order that is then sent to the Vendor and Deale
 
 ### HTTP Request
 
-`POST http://api.tiremove.com/api/search`
+`POST http://api.tiremove.com/api/orders`
 
 ### Query Parameters
 
-Parameter | Default | Required | Description
---------- | ------- | -------- | -----------
-vendorId | 5 | No | -
-dealerId | 10 | Yes | -
-warehouseId | - | Yes | -
-customer | - | Yes | -
-paymentReference | | |
-items | | |
+Parameter | Description
+--------- | -----------
+vendorId | The identifier of the site vendor.
+dealerId | The identifier of the dealer chosen by the customer.
+warehouseId | The warehouse number
+customer | The customer details including this name, email and phone number.
+paymentReference | The payment reference of the transaction (this could reflect the Transaction No from treadsearch)
+items | The items bought by the customer, including the tirelibrary TireID, the quantity, the price and the tax
