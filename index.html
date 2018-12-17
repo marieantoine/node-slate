@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <link href="stylesheets/highlight-monokai.css" rel="stylesheet" type="text/css" media="screen, print" />
+    <script src="javascripts/all.js" type="text/javascript"></script>
+  </head>
+  <body class="" data-languages="[&#34;csharp&#34;]">
+    <a href="#" id="nav-button">
+      <span> NAV <img alt="undefined" class="undefined" src="images/navbar.png">
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img alt="undefined" class="undefined" src="images/logo.png">
+      <div class="lang-selector">
+        <a href="#" data-language-name="csharp">csharp</a>
+      </div>
+      <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+      </div>
+      <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+      <ul class="toc-footer">
+        <li><a href='mailto:support@esprofessionals.com'>Sign Up for a Developer Key</a></li>
+        <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+      </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+        <p>Welcome to official documentation for the TireCoop API!</p>
+        <p>If you are a registered TireCoop Vendor, the TireCoop API provides access to endpoints that allow you to search for Dealers that are part of your program and to place orders to against the Dealers.</p>
+        <!-- # Authentication -->
+        <!-- > To authorize, use this code:
+
+```csharp
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+```
+
+
+> Make sure to replace `meowmeowmeow` with your API key. -->
+        <!-- 
+TireCoop uses API keys to provide authenticated access to the API. Once registered as a Vendor, you can contact us for a key at [support@esprofessionals.com](mailto:support@esprofessionals.com).
+
+TireCoop requires developers to send the authorization containing their API keys for all endpoints in the header. -->
+        <!-- `Authorization: meowmeowmeow`
+
+<aside class="notice">
+You must replace <code>meowmeowmeow</code> with your personal API key.
+</aside> -->
+        <h1 id="search-api">Search API</h1>
+        <h2 id="get-closest-dealers">Get Closest Dealers</h2>
+        <pre class="highlight csharp"><code>
+ HttpClient client = <span class="hljs-keyword">new</span> HttpClient
+    {
+        BaseAddress = <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">"http://api.tiremove.com/"</span>)
+    }
+
+    client.DefaultRequestHeaders.Add(<span class="hljs-string">"bearer"</span>, <span class="hljs-string">"YourApiKeyHere"</span>);
+
+    <span class="hljs-comment">// Hitting the endpoint.</span>
+    <span class="hljs-keyword">object</span> response = Newtonsoft.Json.JsonConvert.DeserializeObject
+        (<span class="hljs-keyword">await</span> client.GetStringAsync(<span class="hljs-string">"api/search?size=10&amp;radius=15&amp;lat=40.77&amp;lng=-73.95"</span>));
+</code></pre>
+        <blockquote>
+          <p>A request returns JSON structured like this:</p>
+        </blockquote>
+        <pre class="highlight json"><code>[
+  {
+      <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4c164234-69ec-44c3-8354-111eec13337d"</span>,
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Wheel Demo"</span>,
+      <span class="hljs-attr">"email"</span>: <span class="hljs-string">"wheeldemo@tirewire.com"</span>,
+      <span class="hljs-attr">"phone"</span>: <span class="hljs-string">"0000000000"</span>,
+      <span class="hljs-attr">"address"</span>: <span class="hljs-string">"1211a Lexington Ave, New York, NY 10028, USA"</span>,
+      <span class="hljs-attr">"latitude"</span>: <span class="hljs-number">40.7769914</span>,
+      <span class="hljs-attr">"longitude"</span>: <span class="hljs-number">-73.957262599999979</span>,
+      <span class="hljs-attr">"services"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"theming"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"warehouses"</span>: <span class="hljs-literal">null</span>
+  },
+  {
+      <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4c6dcdd5-f628-4c77-9eca-c71db1e538cd"</span>,
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Mike's New Tire Shop"</span>,
+      <span class="hljs-attr">"email"</span>: <span class="hljs-string">"161083.toolbox@tirewire.com"</span>,
+      <span class="hljs-attr">"phone"</span>: <span class="hljs-string">"205615322"</span>,
+      <span class="hljs-attr">"address"</span>: <span class="hljs-string">"5th Ave, New York, NY, USA"</span>,
+      <span class="hljs-attr">"latitude"</span>: <span class="hljs-number">40.774414599999993</span>,
+      <span class="hljs-attr">"longitude"</span>: <span class="hljs-number">-73.9656177</span>,
+      <span class="hljs-attr">"services"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"theming"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"warehouses"</span>: <span class="hljs-literal">null</span>
+  }
+]</code></pre>
+        <p>This endpoint retrieves closest dealers within a radius.</p>
+        <h3 id="http-request">HTTP Request</h3>
+        <p><code>GET http://api.tiremove.com/api/search</code></p>
+        <h3 id="query-parameters">Query Parameters</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Default</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>size</td>
+              <td>5</td>
+              <td>No</td>
+              <td>If not set to anything, the result will return the five closest dealers.</td>
+            </tr>
+            <tr>
+              <td>radius</td>
+              <td>-</td>
+              <td>Yes</td>
+              <td>All dealer results will be within this specified radius.</td>
+            </tr>
+            <tr>
+              <td>lat</td>
+              <td>-</td>
+              <td>Yes</td>
+              <td>This is the latitude coordinate of the customer&#39;s location.</td>
+            </tr>
+            <tr>
+              <td>lng</td>
+              <td>-</td>
+              <td>Yes</td>
+              <td>This is the longitude coordinate of the customer&#39;s location.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="get-dealer-services">Get Dealer Services</h2>
+        <p>This endpoint retrieves the services of a specific dealer.</p>
+        <h3 id="http-request">HTTP Request</h3>
+        <p><code>GET http://api.tiremove.com/api/search/{dealerid}/services</code></p>
+        <h3 id="query-parameters">Query Parameters</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>dealerid</td>
+              <td>Yes</td>
+              <td>The results will return the services for this particular dealer.</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre class="highlight csharp"><code>
+ HttpClient client = <span class="hljs-keyword">new</span> HttpClient
+    {
+        BaseAddress = <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">"http://api.tiremove.com/"</span>)
+    }
+
+    client.DefaultRequestHeaders.Add(<span class="hljs-string">"bearer"</span>, <span class="hljs-string">"YourApiKeyHere"</span>);
+
+    <span class="hljs-comment">// Hitting the endpoint.</span>
+    <span class="hljs-keyword">object</span> response = Newtonsoft.Json.JsonConvert.DeserializeObject
+        (<span class="hljs-keyword">await</span> client.GetStringAsync(<span class="hljs-string">"api/search/{dealerid}/services"</span>));
+</code></pre>
+        <blockquote>
+          <p>The following sample represents the JSON response for this endpoint:</p>
+        </blockquote>
+        <pre class="highlight json"><code>{
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Best Tire"</span>,
+  <span class="hljs-attr">"price"</span>: <span class="hljs-number">60.00</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Tire Fitting"</span>
+}</code></pre>
+        <h1 id="orders-api">Orders API</h1>
+        <h2 id="create-order">Create Order</h2>
+        <blockquote>
+          <p>The following sample represents the JSON response for this endpoint:</p>
+        </blockquote>
+        <pre class="highlight json"><code>{
+  <span class="hljs-attr">"vendorId"</span>: <span class="hljs-string">"abcdefg1234567dbca054c3c07078cd"</span>,
+  <span class="hljs-attr">"dealerId"</span>: <span class="hljs-string">"e3baffffd56f4d5f9d0e8e579a98c0dc"</span>,
+  <span class="hljs-attr">"warehouseId"</span>: <span class="hljs-number">17</span>,
+  <span class="hljs-attr">"customer"</span>: {
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"carolinetest@example.com"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Caroline"</span>,
+    <span class="hljs-attr">"phone"</span>: <span class="hljs-string">"555-5555-5555"</span>
+  },
+  <span class="hljs-attr">"paymentReference"</span>: <span class="hljs-string">"CUST-384903"</span>,
+  <span class="hljs-attr">"items"</span>: [
+    {
+      <span class="hljs-attr">"tireId"</span>: <span class="hljs-number">11</span>,
+      <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attr">"price"</span>: <span class="hljs-number">49</span>,
+      <span class="hljs-attr">"tax"</span>: <span class="hljs-number">11.33</span>
+    }
+  ]
+}
+</code></pre>
+        <p>This endpoint creates a TireCoop Order that is then sent to the Vendor and Dealer tools.</p>
+        <h3 id="http-request">HTTP Request</h3>
+        <p><code>POST http://api.tiremove.com/api/orders</code></p>
+        <h3 id="query-parameters">Query Parameters</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>vendorId</td>
+              <td>The identifier of the site vendor.</td>
+            </tr>
+            <tr>
+              <td>dealerId</td>
+              <td>The identifier of the dealer chosen by the customer.</td>
+            </tr>
+            <tr>
+              <td>warehouseId</td>
+              <td>The warehouse number</td>
+            </tr>
+            <tr>
+              <td>customer</td>
+              <td>The customer details including this name, email and phone number.</td>
+            </tr>
+            <tr>
+              <td>paymentReference</td>
+              <td>The payment reference of the transaction (this could reflect the Transaction No from treadsearch)</td>
+            </tr>
+            <tr>
+              <td>items</td>
+              <td>The items bought by the customer, including the tirelibrary TireID, the quantity, the price and the tax</td>
+            </tr>
+          </tbody>
+        </table>
+        <h1 id="errors">Errors</h1>
+        <!-- <aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside> -->
+        <p>TireCoop follows the conventions for HTTP response codes:</p>
+        <ul>
+          <li>2xx indicate success;</li>
+          <li>4xx indicate errors; and</li>
+          <li>5xx indicate server errors with TireCoop API itself.</li>
+        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Error Code</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>400</td>
+              <td>Bad Request -- Your request is invalid</td>
+            </tr>
+            <tr>
+              <td>401</td>
+              <td>Unauthorized -- Your API key is could not be validated</td>
+            </tr>
+            <tr>
+              <td>403</td>
+              <td>Forbidden -- The endpoint you are trying to reach is not available to you.</td>
+            </tr>
+            <tr>
+              <td>404</td>
+              <td>Not Found -- The end point could not be found</td>
+            </tr>
+            <tr>
+              <td>500</td>
+              <td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h1 id="reporting-issues">Reporting Issues</h1>
+        <p>If you find anything wrong with any of the endpoints, please let us know via email at <a href="mailto:support@esprofessionals.com">TireCoop API Support</a>.</p>
+        <p>We will get back to you as soon as possible.</p>
+      </div>
+      <div class="dark-box">
+        <div class="lang-selector">
+          <a href="#" data-language-name="csharp">csharp</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
