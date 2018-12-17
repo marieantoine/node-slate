@@ -5,7 +5,7 @@ Welcome to official documentation for the TireCoop API!
 If you are a registered TireCoop Vendor, the TireCoop API provides access to endpoints that allow you to search for Dealers that are part of your program and to place orders to against the Dealers.
 
 
-# Authentication
+<!-- # Authentication -->
 
 <!-- > To authorize, use this code:
 
@@ -17,10 +17,10 @@ api = Kittn::APIClient.authorize!('meowmeowmeow')
 
 
 > Make sure to replace `meowmeowmeow` with your API key. -->
-
+<!-- 
 TireCoop uses API keys to provide authenticated access to the API. Once registered as a Vendor, you can contact us for a key at [support@esprofessionals.com](mailto:support@esprofessionals.com).
 
-TireCoop requires developers to send the authorization containing their API keys for all endpoints in the header.
+TireCoop requires developers to send the authorization containing their API keys for all endpoints in the header. -->
 
 <!-- `Authorization: meowmeowmeow`
 
