@@ -2,31 +2,18 @@
 
 Welcome to official documentation for the TireCoop API!
 
-If you are a registered TireCoop Vendor, the TireCoop API provides access to endpoints that allow you to search for Dealers that are part of your program and to place orders to against the Dealers.
+If you are a registered TireCoop Vendor, the TireCoop API provides access to endpoints that allow you to geolocate dealers that are part of your program and to send order confirmations against the dealers, effectively helping you to streamline the management of your orders.
 
 
-<!-- # Authentication -->
+# Authentication
 
-<!-- > To authorize, use this code:
+TireCoop uses API keys to provide authenticated access to the API. You can contact us for a key at [support@esprofessionals.com](mailto:support@esprofessionals.com).
 
-```csharp
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-
-> Make sure to replace `meowmeowmeow` with your API key. -->
-<!-- 
-TireCoop uses API keys to provide authenticated access to the API. Once registered as a Vendor, you can contact us for a key at [support@esprofessionals.com](mailto:support@esprofessionals.com).
-
-TireCoop requires developers to send the authorization containing their API keys for all endpoints in the header. -->
-
-<!-- `Authorization: meowmeowmeow`
-
+TireCoop requires developers to send the authorization containing their API keys for all endpoints in the header. 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside> -->
+You must replace <code>YourApiKeyHere</code> with your personal API key.
+</aside>
+
 
 # Search API
 
@@ -43,7 +30,7 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 
     // Hitting the endpoint.
     object response = Newtonsoft.Json.JsonConvert.DeserializeObject
-        (await client.GetStringAsync("api/search?size=10&radius=15&lat=40.77&lng=-73.95"));
+        (await client.GetStringAsync("api/search?vendorId=abcdefg1234567dbca054c3c07078cd&size=10&radius=15&lat=40.77&lng=-73.95"));
 
 ```
 
@@ -51,30 +38,271 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 
 ```json
 [
-  {
-      "id": "4c164234-69ec-44c3-8354-111eec13337d",
-      "name": "Wheel Demo",
-      "email": "wheeldemo@tirewire.com",
-      "phone": "0000000000",
-      "address": "1211a Lexington Ave, New York, NY 10028, USA",
-      "latitude": 40.7769914,
-      "longitude": -73.957262599999979,
-      "services": null,
-      "theming": null,
-      "warehouses": null
-  },
-  {
-      "id": "4c6dcdd5-f628-4c77-9eca-c71db1e538cd",
-      "name": "Mike's New Tire Shop",
-      "email": "161083.toolbox@tirewire.com",
-      "phone": "205615322",
-      "address": "5th Ave, New York, NY, USA",
-      "latitude": 40.774414599999993,
-      "longitude": -73.9656177,
-      "services": null,
-      "theming": null,
-      "warehouses": null
-  }
+    {
+        "id": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+        "name": "Caroline Wheels",
+        "email": "caroline@esprofessionals.com",
+        "phone": "245879632",
+        "address": "Tesla Rd, Livermore, CA 94550, USA",
+        "restrictions": "No restrictions under 22 wheel diameters.",
+        "about": "Founded in 1998, Caroline Tires shop has been selling and providing excellent services to their customers.",
+        "contactName": "Maria",
+        "contactMobile": "500194855",
+        "contactPosition": "Manager",
+        "latitude": 37.665115,
+        "longitude": -121.71895599999999,
+        "services": null,
+        "theming": {
+            "logoUrl": "https://api.tiremove.com/images/387b6bc6-1b58-478a-90b3-be3e58a39bf5.png",
+            "shortLogoUrl": null,
+            "coverPhotoUrl": null,
+            "storePhotoUrls": null
+        },
+        "openingHours": [
+            {
+                "day": "Monday",
+                "openingHour": "09:00",
+                "closingHour": "17:00"
+            },
+            {
+                "day": "Tuesday",
+                "openingHour": "09:00",
+                "closingHour": "20:00"
+            },
+            {
+                "day": "Wednesday",
+                "openingHour": "09:00",
+                "closingHour": "17:00"
+            },
+            {
+                "day": "Thursday",
+                "openingHour": "08:00",
+                "closingHour": "18:00"
+            },
+            {
+                "day": "Friday",
+                "openingHour": "08:00",
+                "closingHour": "17:00"
+            },
+            {
+                "day": "Saturday",
+                "openingHour": "11:30",
+                "closingHour": "15:30"
+            },
+            {
+                "day": "Sunday",
+                "openingHour": "10:00",
+                "closingHour": "15:30"
+            }
+        ],
+        "warehouses": [
+            {
+                "id": 1,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "warehouseId": 17,
+                "warehouse": {
+                    "id": 17,
+                    "name": "Warehouse 2",
+                    "email": "warehouse@tiremove.com",
+                    "phone": "555-555-554",
+                    "address": "675 Boylston St, Boston, MA 02116, USA",
+                    "latitude": 0.0,
+                    "longitude": 0.0,
+                    "location": {
+                        "latitude": 0.0,
+                        "longitude": 0.0
+                    },
+                    "distance": 0.0,
+                    "connectionId": 24318,
+                    "vendorId": "abcdefg1234567dbca054c3c07078cd",
+                    "vendor": null,
+                    "createdAt": "2018-08-16T03:35:27.1490834",
+                    "isActive": true,
+                    "dealers": null
+                },
+                "isActive": true
+            }
+        ],
+        "accreditations": [
+            {
+                "id": 81,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "accreditationId": 1,
+                "accreditation": {
+                    "id": 0,
+                    "name": "ASE"
+                }
+            },
+            {
+                "id": 82,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "accreditationId": 2,
+                "accreditation": {
+                    "id": 0,
+                    "name": "TIA"
+                }
+            }
+        ],
+        "installations": [
+            {
+                "id": 165,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 2,
+                "installation": {
+                    "id": 0,
+                    "name": "50-55 Series"
+                },
+                "price": 26.0
+            },
+            {
+                "id": 166,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 10,
+                "installation": {
+                    "id": 0,
+                    "name": "TPMS Surcharge"
+                },
+                "price": 0.0
+            },
+            {
+                "id": 167,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 9,
+                "installation": {
+                    "id": 0,
+                    "name": "LT Size Surcharge"
+                },
+                "price": 0.0
+            },
+            {
+                "id": 168,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 1,
+                "installation": {
+                    "id": 0,
+                    "name": "60 Series and higher"
+                },
+                "price": 15.0
+            },
+            {
+                "id": 169,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 8,
+                "installation": {
+                    "id": 0,
+                    "name": "21\" and Above Add"
+                },
+                "price": 0.0
+            },
+            {
+                "id": 170,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 3,
+                "installation": {
+                    "id": 0,
+                    "name": "40-45 Series"
+                },
+                "price": 33.0
+            },
+            {
+                "id": 171,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 4,
+                "installation": {
+                    "id": 0,
+                    "name": "35 Series and lower"
+                },
+                "price": 24.32
+            },
+            {
+                "id": 172,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 5,
+                "installation": {
+                    "id": 0,
+                    "name": "Rubber Valve Stems"
+                },
+                "price": 15.0
+            },
+            {
+                "id": 173,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 6,
+                "installation": {
+                    "id": 0,
+                    "name": "Disposal Fee"
+                },
+                "price": 10.0
+            },
+            {
+                "id": 174,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "installationId": 7,
+                "installation": {
+                    "id": 0,
+                    "name": "Run-Flat Surcharge"
+                },
+                "price": 0.0
+            }
+        ],
+        "vehicles": [
+            {
+                "id": 187,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "vehicleTypeId": 5,
+                "vehicleType": {
+                    "id": 0,
+                    "name": "Industrial"
+                }
+            },
+            {
+                "id": 188,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "vehicleTypeId": 3,
+                "vehicleType": {
+                    "id": 0,
+                    "name": "Medium Truck"
+                }
+            },
+            {
+                "id": 189,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "vehicleTypeId": 4,
+                "vehicleType": {
+                    "id": 0,
+                    "name": "Farm"
+                }
+            },
+            {
+                "id": 190,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "vehicleTypeId": 1,
+                "vehicleType": {
+                    "id": 0,
+                    "name": "Passenger"
+                }
+            },
+            {
+                "id": 191,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "vehicleTypeId": 6,
+                "vehicleType": {
+                    "id": 0,
+                    "name": "Commercial"
+                }
+            },
+            {
+                "id": 192,
+                "dealerId": "e3baffffd56f4d5f9d0e8e579a98c0dc",
+                "vehicleTypeId": 7,
+                "vehicleType": {
+                    "id": 0,
+                    "name": "ATV/UTV"
+                }
+            }
+        ],
+        "averageRating": 4.333333333333333
+    }
 ]
 ```
 
@@ -88,49 +316,12 @@ This endpoint retrieves closest dealers within a radius.
 
 Parameter | Default | Required | Description
 --------- | ------- | -------- | -----------
+vendorId | - | Yes | This is the identifier of the site vendor.
 size | 5 | No | If not set to anything, the result will return the five closest dealers.
 radius | - | Yes | All dealer results will be within this specified radius.
 lat | - | Yes | This is the latitude coordinate of the customer's location.
 lng | - | Yes | This is the longitude coordinate of the customer's location.
 
-## Get Dealer Services
-
-This endpoint retrieves the services of a specific dealer.
-
-### HTTP Request
-
-`GET http://api.tiremove.com/api/search/{dealerid}/services`
-
-### Query Parameters
-
-Parameter | Required | Description
---------- | -------- | ----------- 
-dealerid | Yes | The results will return the services for this particular dealer.
-
-```csharp
-
- HttpClient client = new HttpClient
-    {
-        BaseAddress = new Uri("http://api.tiremove.com/")
-    }
-
-    client.DefaultRequestHeaders.Add("bearer", "YourApiKeyHere");
-
-    // Hitting the endpoint.
-    object response = Newtonsoft.Json.JsonConvert.DeserializeObject
-        (await client.GetStringAsync("api/search/{dealerid}/services"));
-
-```
-
->The following sample represents the JSON response for this endpoint:
-
-```json
-{
-  "name": "Best Tire",
-  "price": 60.00,
-  "description": "Tire Fitting"
-}
-```
 
 # Orders API
 
